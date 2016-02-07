@@ -10,12 +10,13 @@ var outer = function(){
 //Invoke outer saving the return value into another variable called 'inner'.
 
   //Code Here
+  var inner = outer();
 
 //Once you do that, invoke inner.
 
   //Code Here
 
-
+inner();
 
 //Next problem
 
@@ -34,7 +35,8 @@ var callFriend = function(){
 
   //Code Here
 
-
+var inner = callFriend();
+console.log(inner("435-215-9248"));
 
 //Next Problem
 
@@ -43,6 +45,14 @@ var callFriend = function(){
 /*
   Write a function called makeCounter that makes the following code work properly.
 */
+
+function makeCounter() {
+    var j = 1;
+    function plusOne() {
+        return j++;
+    }
+    return plusOne;
+}
 
   //Code Here
   var count = makeCounter();
@@ -58,10 +68,32 @@ var callFriend = function(){
 
 
 /*
-  Write a function that does something simple (console, alert, etc). Write a second function that accepts the first function as it's first parameter. The second function should return a new third function which, when invoked, invokes the first, original function that was passed in, but will only ever do so once.
+  Write a function named codeLove that returns the string 'I love code'. Write a second function named codeFriend 
+  that accepts the first function as it's first parameter. The second function should return a new third function.
+   Store the third function in a variable, codeEcho which, when invoked, invokes the first, original function that 
+   was passed in, but will only ever do so once (returns null after first invocation).
 */
 
   //Code Here
+
+  function codeLove() { //declare function name
+    return "I love code"; //return this string
+  }
+
+  function codeFriend(param) { //declare second function, set paramater
+    var counter = 1; //declace the counter variable and set it to 1
+
+    return function() { //the second function/codefriend will return this function
+      if (counter > 1) { //
+        return null
+      } else {
+        counter++; //incremtent counter
+        return param; //return param/codeLove
+      }
+    }
+  }
+
+  var codeEcho = codeFriend(codeLove()); //codeEcho now represents 
 
 
 
@@ -70,8 +102,24 @@ var callFriend = function(){
 
 
 /*
-  Now, similar to the last problem, write a function called 'fnCounter' that accepts two parameters. The first parameter will be an anonymous function and the second parameter, 'N', will be a number. Now, in 'fnCounter', allow the anonymous funciton to be invoked 'N' number of times. After it's been invoked 'N' number of times, return 'STOP'.
+  Now, similar to the last problem, write a function called 'fnCounter' 
+  that accepts two parameters. The first parameter will be an 
+  anonymous function and the second parameter, 'N', will be a 
+  number. Now, in 'fnCounter', allow the anonymous function to 
+  be invoked 'N' number of times. After it's been invoked 'N' number of times, return 'STOP'.
 */
+
+function fnCounter(anonFunc, num) {
+  var counter = 1;
+  return function() {
+    if (counter <= num) {
+      counter++;
+      return anonFunc();
+    } else {
+      return "STOP";
+    }
+  }
+} 
 
 
 
@@ -81,14 +129,17 @@ var callFriend = function(){
 
 /*
   var counter = function(){
-    for (var i=1; i<=5; i++) {
-      setTimeout( function timer(){
+    for (var i=1; i<=5; i++) { //function counter is going to loop 5 times.
+      setTimeout( function timer(i) { //set i as parameter
           console.log( i );
-      }, i*1000 );
+      }, i*1000, i ); //set
     }
   };
 
-  Above you have a function named counter. Examine the function (without running the code) then below write what you expect to happen when the funciton is invoked. *Hint: setTimeout calls a function or evaluates an expression after a specified number of milliseconds.
+  Above you have a function named counter. Examine the function 
+  (without running the code) then below write what you expect to 
+  happen when the funciton is invoked. *Hint: setTimeout calls a 
+  function or evaluates an expression after a specified number of milliseconds.
 
     //Answer Here
 
@@ -100,7 +151,8 @@ var callFriend = function(){
     //Answer Here
 
 
-  Fix the counter function so that it works the way you expect it to work. (logging 1 then 2 then 3, etc)
+  Fix the counter function so that it works the way you expect 
+  it to work. (logging 1 then 2 then 3, etc) (Note: No unit test for this one because of the timeout)
 */
 
     //Code Here
@@ -113,6 +165,18 @@ var callFriend = function(){
 
 /*
   Make the following code work
+  */
+
+  var fn = function(num) {
+  return function(){
+    return num;
+  };
+}
+
+var funcArray = [];
+for (var i = 0; i < 6; i++) {
+  funcArray.push(fn(i));
+}
 
   funcArray[0]() //0
   funcArray[1]() //1
@@ -121,7 +185,5 @@ var callFriend = function(){
   funcArray[4]() //4
   funcArray[5]() //5
 
-  *Hint: Don't let this fool you. Break down what's really happening here.
-*/
-
+  //*Hint: Don't let this fool you. Break down what's really happening here.
 
